@@ -16,9 +16,9 @@ public class ProdutoController {
         this.produtoService = produtoService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/pwe/getProduto")
-    public Produto getById(@RequestBody Produto produto){
-        return produtoService.getById(produto.getId());
+    @RequestMapping(method = RequestMethod.GET, path = "/pwe/getProduto/{id}")
+    public Produto getById(@PathVariable("id") Long id){
+        return produtoService.getById(id);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/pwe/getProdutoByName")
@@ -30,6 +30,12 @@ public class ProdutoController {
     public String post(@RequestBody Produto produto){
         produtoService.post(produto);
         return "produto adicionado com sucesso!!!";
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, path = "pwe/updateUser")
+    public String update(@RequestBody Produto produto){
+        produtoService.update(produto.getId(), produto);
+        return "usuario atualizado com sucesso!!!";
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/pwe/deleteProduto")

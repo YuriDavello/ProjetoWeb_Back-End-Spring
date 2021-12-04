@@ -15,6 +15,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/pwe/getUser/{id}")
+    public User getById(@PathVariable("id") Long id){
+        return userService.getById(id);
+    }
+
     @RequestMapping(method = RequestMethod.GET, path = "/pwe/getUser")
     public User getByEmail(@RequestBody User user){
         return userService.login(user.getEmail(),user.getPassword());
@@ -24,6 +29,12 @@ public class UserController {
     public String post(@RequestBody User user){
         userService.post(user);
         return "usuario adicionado com sucesso!!!";
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, path = "pwe/updateUser")
+    public String update(@RequestBody User user){
+        userService.update(user.getId(), user);
+        return "usuario atualizado com sucesso!!!";
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/pwe/deleteUser")
