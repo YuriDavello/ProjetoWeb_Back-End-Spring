@@ -10,11 +10,16 @@ import javax.persistence.*;
 public class Compra {
     @Id
     @GeneratedValue
-    @Getter @Setter
+    @Getter
+    @Setter
     private Long id;
     @ManyToOne
-    @JoinColumn @Getter @Setter
+    @JoinColumn
+    @Getter
+    @Setter
     private Produto produto;
-    @Column @Getter @Setter
+    @Column
+    @Getter
+    @Setter
     private Integer quantidade;
 }

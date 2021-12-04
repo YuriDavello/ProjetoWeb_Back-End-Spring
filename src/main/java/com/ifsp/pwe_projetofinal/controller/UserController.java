@@ -25,4 +25,10 @@ public class UserController {
         userService.post(user);
         return "usuario adicionado com sucesso!!!";
     }
+
+    @RequestMapping(method = RequestMethod.DELETE, path = "/pwe/deleteUser")
+    public String delete(@RequestBody User user){
+        userService.delete(user.getId());
+        return "usuario deletado com sucesso!!!";
+    }
 }
