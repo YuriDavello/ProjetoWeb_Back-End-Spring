@@ -15,7 +15,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/pwe/getUser/{id}")
+    @RequestMapping(method = RequestMethod.GET, path = "/pwe/getUserById/{id}")
     public User getById(@PathVariable("id") Long id){
         return userService.getById(id);
     }
