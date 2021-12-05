@@ -5,6 +5,8 @@ import com.ifsp.pwe_projetofinal.model.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProdutoService {
     private final ProdutoRepository produtoRepository;
@@ -34,6 +36,9 @@ public class ProdutoService {
         produtoRepository.deleteById(id);
     }
 
+    public List<Produto> getProdutos(){
+      return (List<Produto>) produtoRepository.findAll();
+    }
 
     public Produto getByNome(String nome) {
         Produto produto = produtoRepository.findByNome(nome);

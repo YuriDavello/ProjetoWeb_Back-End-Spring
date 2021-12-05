@@ -6,6 +6,8 @@ import com.ifsp.pwe_projetofinal.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 public class ProdutoController {
@@ -32,10 +34,15 @@ public class ProdutoController {
         return "produto adicionado com sucesso!!!";
     }
 
-    @RequestMapping(method = RequestMethod.PUT, path = "pwe/updateUser")
+    @RequestMapping(method = RequestMethod.PUT, path = "pwe/updateProduto")
     public String update(@RequestBody Produto produto){
         produtoService.update(produto.getId(), produto);
-        return "usuario atualizado com sucesso!!!";
+        return "produto atualizado com sucesso!!!";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/pwe/getAllProdutos")
+    public List<Produto> getProdutos(){
+        return produtoService.getProdutos();
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/pwe/deleteProduto")
