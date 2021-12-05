@@ -4,7 +4,6 @@ import com.ifsp.pwe_projetofinal.DAO.ProdutoRepository;
 import com.ifsp.pwe_projetofinal.model.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

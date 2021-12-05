@@ -15,16 +15,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/pwe/getUserById/{id}")
-    public User getById(@PathVariable("id") Long id){
-        return userService.getById(id);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, path = "/pwe/getUser")
-    public User getByEmail(@RequestBody User user){
-        return userService.login(user.getEmail(),user.getPassword());
-    }
-
     @RequestMapping(method = RequestMethod.POST, path = "/pwe/postUser")
     public String post(@RequestBody User user){
         userService.post(user);

@@ -20,7 +20,4 @@ public class UsersData {
     private Date nascimento;
     @Column @Getter @Setter
     private String telefone;
-    @JoinColumn @Getter @Setter
-    @ManyToOne
-    private Compra compra;
 }

@@ -1,5 +1,6 @@
 package com.ifsp.pwe_projetofinal.service;
 
+import com.ifsp.pwe_projetofinal.DAO.UsersDataRepository;
 import com.ifsp.pwe_projetofinal.DAO.UserRepository;
 import com.ifsp.pwe_projetofinal.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final UsersDataRepository userDataRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository, UsersDataRepository userDataRepository){
         this.userRepository = userRepository;
+        this.userDataRepository = userDataRepository;
     }
 
     public User getById(Long id){
@@ -28,6 +31,7 @@ public class UserService {
     }
 
     public void post(User user){
+        userDataRepository.save(user.getUsersData());
         userRepository.save(user);
     }
 
@@ -41,6 +45,8 @@ public class UserService {
     }
 
     public void delete(Long id){
+        long data = userRepository.findById(id).get().getUsersData().getId();
         userRepository.deleteById(id);
+        userDataRepository.deleteById(data);
     }
 }
