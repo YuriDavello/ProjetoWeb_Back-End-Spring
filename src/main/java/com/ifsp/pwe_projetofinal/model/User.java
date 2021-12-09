@@ -1,24 +1,21 @@
 package com.ifsp.pwe_projetofinal.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import javax.persistence.*;
 
-@Entity
+@Data  @NoArgsConstructor  @AllArgsConstructor
+@Entity(name = "Usuario")
 public class User {
     @Id
-    @GeneratedValue
-    @Getter @Setter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column @Getter @Setter
-    private String email;
-    @Column @Getter @Setter
+    @Column(unique = true)
+    private String login;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @JoinColumn
-    @Getter @Setter
     @ManyToOne
     private UsersData usersData;
-    @Column @Getter @Setter
     private Boolean isAdmin;
 }

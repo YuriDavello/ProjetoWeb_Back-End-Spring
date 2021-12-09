@@ -2,27 +2,22 @@ package com.ifsp.pwe_projetofinal.controller;
 
 import com.ifsp.pwe_projetofinal.model.UsersData;
 import com.ifsp.pwe_projetofinal.service.UsersDataService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
+@CrossOrigin @RequiredArgsConstructor @RequestMapping("/pwe")
 public class UsersDataController {
     private final UsersDataService usersDataService;
 
-    @Autowired
-    public UsersDataController(UsersDataService usersDataService){
-        this.usersDataService = usersDataService;
+    @GetMapping("/getUsersData/{id}")
+    public ResponseEntity<UsersData>getById(@PathVariable("id") Long id){
+        return ResponseEntity.ok().body(usersDataService.getById(id));
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/pwe/getUsersData/{id}")
-    public UsersData getById(@PathVariable("id") Long id){
-        return usersDataService.getById(id);
-    }
-
-    @RequestMapping(method = RequestMethod.PUT, path = "pwe/updateUsersData")
-    public String update(@RequestBody UsersData usersData){
-        usersDataService.update(usersData.getId(), usersData);
-        return "dados atualizados com sucesso!!!";
+    @PutMapping("/updateUsersData")
+    public ResponseEntity<String>update(@RequestBody UsersData usersData){
+        return ResponseEntity.ok().body(usersDataService.update(usersData.getId(), usersData));
     }
 }

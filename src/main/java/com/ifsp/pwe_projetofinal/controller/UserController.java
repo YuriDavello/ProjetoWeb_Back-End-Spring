@@ -2,34 +2,32 @@ package com.ifsp.pwe_projetofinal.controller;
 
 import com.ifsp.pwe_projetofinal.model.User;
 import com.ifsp.pwe_projetofinal.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
+@CrossOrigin @RequiredArgsConstructor @RequestMapping("/pwe")
 public class UserController {
     private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService){
-        this.userService = userService;
+    @GetMapping("/getUser/{id}")
+    public ResponseEntity<User>getById(@PathVariable("id") Long id){
+        return ResponseEntity.ok().body(userService.getById(id));
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/pwe/postUser")
-    public String post(@RequestBody User user){
-        userService.post(user);
-        return "usuario adicionado com sucesso!!!";
+    @PostMapping("/postUser")
+    public ResponseEntity<String>post(@RequestBody User user){
+        return ResponseEntity.ok().body(userService.post(user));
     }
 
-    @RequestMapping(method = RequestMethod.PUT, path = "pwe/updateUser")
-    public String update(@RequestBody User user){
-        userService.update(user.getId(), user);
-        return "usuario atualizado com sucesso!!!";
+    @PutMapping( "/updateUser")
+    public ResponseEntity<String>update(@RequestBody User user){
+        return ResponseEntity.ok().body(userService.update(user.getId(), user));
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/pwe/deleteUser")
-    public String delete(@RequestBody User user){
-        userService.delete(user.getId());
-        return "usuario deletado com sucesso!!!";
+    @DeleteMapping( "/deleteUser")
+    public ResponseEntity<String>delete(@RequestBody User user){
+        return ResponseEntity.ok().body(userService.delete(user.getId()));
     }
 }

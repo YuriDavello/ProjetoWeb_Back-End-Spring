@@ -1,23 +1,19 @@
 package com.ifsp.pwe_projetofinal.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 
+@Data @NoArgsConstructor @AllArgsConstructor
 @Entity
 public class UsersData {
     @Id
-    @GeneratedValue
-    @Getter @Setter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column @Getter @Setter
     private String nome;
-    @Column @Getter @Setter
+    @Column(unique = true)
     private String cpf;
-    @Column @Getter @Setter
     private Date nascimento;
-    @Column @Getter @Setter
+    @Column(unique = true)
     private String telefone;
 }

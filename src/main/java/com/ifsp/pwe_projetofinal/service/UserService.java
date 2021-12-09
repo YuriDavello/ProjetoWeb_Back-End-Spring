@@ -3,26 +3,35 @@ package com.ifsp.pwe_projetofinal.service;
 import com.ifsp.pwe_projetofinal.DAO.UsersDataRepository;
 import com.ifsp.pwe_projetofinal.DAO.UserRepository;
 import com.ifsp.pwe_projetofinal.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service
-public class UserService {
+import java.util.ArrayList;
+
+@Service @RequiredArgsConstructor
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UsersDataRepository userDataRepository;
 
-    @Autowired
-    public UserService(UserRepository userRepository, UsersDataRepository userDataRepository){
-        this.userRepository = userRepository;
-        this.userDataRepository = userDataRepository;
+    @Override
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        User user = userRepository.findByLogin(login);
+        if(user == null){
+            throw new UsernameNotFoundException("login not found");
+        }
+        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(),
+                new ArrayList<>());
     }
 
     public User getById(Long id){
         return userRepository.findById(id).get();
     }
 
-    public User login(String email, String password){
-        User user = userRepository.findByEmail(email);
+    public User login(String login, String password){
+        User user = userRepository.findByLogin(login);
         if(password.equals(user.getPassword())){
             return user;
         } else {
@@ -30,23 +39,26 @@ public class UserService {
         }
     }
 
-    public void post(User user){
+    public String post(User user){
         userDataRepository.save(user.getUsersData());
         userRepository.save(user);
+        return "usuario adicionado!";
     }
 
-    public void update(Long id, User user){
+    public String update(Long id, User user){
         User aux = getById(id);
-        aux.setEmail(user.getEmail());
+        aux.setLogin(user.getLogin());
         aux.setPassword(user.getPassword());
         aux.setUsersData(user.getUsersData());
         aux.setIsAdmin(user.getIsAdmin());
         userRepository.save(aux);
+        return "usuario alterado!";
     }
 
-    public void delete(Long id){
+    public String delete(Long id){
         long data = userRepository.findById(id).get().getUsersData().getId();
         userRepository.deleteById(id);
         userDataRepository.deleteById(data);
+        return "usuario deletado!";
     }
 }
