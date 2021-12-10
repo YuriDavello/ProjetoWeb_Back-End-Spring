@@ -11,7 +11,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
-    private String login;
+    private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @JoinColumn
