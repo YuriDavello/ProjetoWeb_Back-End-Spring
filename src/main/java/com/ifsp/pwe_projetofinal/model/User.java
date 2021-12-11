@@ -17,5 +17,5 @@ public class User {
     @JoinColumn
     @ManyToOne
     private UsersData usersData;
-    private Boolean isAdmin;
+    private String token;
 }
