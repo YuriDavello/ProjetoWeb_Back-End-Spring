@@ -12,15 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
-@RequiredArgsConstructor
-@RequestMapping("/auth")
+@CrossOrigin("*")
+@RequestMapping("auth")
 public class UserController {
 
     @Autowired
     UserService userService;
 
-    @GetMapping("/findById/{id}")
+    @GetMapping("findById/{id}")
     public ResponseEntity<Optional<User>>getById(@PathVariable("id") Long id){
         return ResponseEntity.ok().body(userService.getById(id));
     }
@@ -31,7 +30,9 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<String> login(@RequestBody UserLogin userLogin){
-        return new ResponseEntity<>(userService.login(userLogin), HttpStatus.OK);
+    public ResponseEntity<UserLogin> login(@RequestBody Optional<UserLogin> userLogin){
+        return userService.login(userLogin)
+                .map(resp -> ResponseEntity.ok(resp))
+                .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 }
