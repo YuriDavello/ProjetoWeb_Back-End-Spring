@@ -25,6 +25,8 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/pwe/login").permitAll()
                 .antMatchers("/pwe/register").permitAll()
+                .antMatchers("/email/register").permitAll()
+                .antMatchers("/email/confirm").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
