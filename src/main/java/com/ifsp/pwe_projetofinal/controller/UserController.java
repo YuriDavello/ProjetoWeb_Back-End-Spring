@@ -19,7 +19,7 @@ public class UserController {
     }
 
     @PostMapping("register")
-    public ResponseEntity<String> register(@RequestBody User user){
+    public ResponseEntity<User> register(@RequestBody User user){
         return ResponseEntity.status(HttpStatus.CREATED).body(this.userService.register(user));
     }
 

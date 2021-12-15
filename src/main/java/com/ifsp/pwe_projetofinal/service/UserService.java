@@ -22,11 +22,11 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public String register(User user){
+    public User register(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDataRepository.save(user.getUsersData());
         userRepository.save(user);
-        return "usuario adicionado!";
+        return user;
     }
 
     public Optional<User> login(Optional<User> userLogin) {

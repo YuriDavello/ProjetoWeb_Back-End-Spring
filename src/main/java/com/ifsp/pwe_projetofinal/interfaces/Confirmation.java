@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(url = "http://localhost:8090/" , name = "confirm")
 public interface Confirmation {
 
-    @PostMapping("confirm")
+    @PostMapping("temp/confirm")
     Object confirmEmail(@RequestBody User user);
 }
