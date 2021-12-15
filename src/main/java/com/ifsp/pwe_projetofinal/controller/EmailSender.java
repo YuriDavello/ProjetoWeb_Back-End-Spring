@@ -1,7 +1,10 @@
 package com.ifsp.pwe_projetofinal.controller;
 
+import com.ifsp.pwe_projetofinal.interfaces.Confirmation;
 import com.ifsp.pwe_projetofinal.model.Details;
+import com.ifsp.pwe_projetofinal.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +26,9 @@ public class EmailSender {
 
     @Autowired
     private JavaMailSender sender;
+
+    @Autowired
+    private Confirmation confirmation;
 
     @RequestMapping("/register")
     public @ResponseBody
@@ -52,5 +58,10 @@ public class EmailSender {
 
         return details;
 
+    }
+
+    @PostMapping("confirm")
+    public Object confirmEmail(@RequestBody User user) {
+        return confirmation.confirmEmail(user);
     }
 }
