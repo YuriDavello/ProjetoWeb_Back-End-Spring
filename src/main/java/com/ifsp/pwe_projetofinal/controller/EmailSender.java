@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -30,25 +31,23 @@ public class EmailSender {
     @Autowired
     private Confirmation confirmation;
 
-    @RequestMapping("/register")
-    public @ResponseBody
-    Details confirm(@RequestBody Details details) throws Exception {
-
+    @PostMapping("confirm")
+    public Object confirmEmail(@RequestBody User user) throws MessagingException {
         MimeMessage message = sender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message,
                 MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                 StandardCharsets.UTF_8.name());
 
         Map<String, Object> model = new HashMap<String, Object>();
-        model.put("name", details.getName());
-        model.put("email", details.getEmail());
+        model.put("name", user.getUsersData().getNome());
+        model.put("email", user.getUsername());
 
         Context context = new Context();
         context.setVariables(model);
         String html = templateEngine.process("confirmation", context);
 
         try {
-            helper.setTo(details.getEmail());
+            helper.setTo(user.getUsername());
             helper.setText(html, true);
             helper.setSubject("Welcome to pwe project");
         } catch (javax.mail.MessagingException e) {
@@ -56,12 +55,6 @@ public class EmailSender {
         }
         sender.send(message);
 
-        return details;
-
-    }
-
-    @PostMapping("confirm")
-    public Object confirmEmail(@RequestBody User user) {
         return confirmation.confirmEmail(user);
     }
 }
