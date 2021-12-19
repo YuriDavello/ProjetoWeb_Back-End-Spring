@@ -1,6 +1,5 @@
 package com.ifsp.pwe_projetofinal.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import javax.persistence.*;
 
@@ -14,7 +13,7 @@ public class User {
     private String username;
     private String password;
     @JoinColumn
-    @ManyToOne
+    @OneToOne
     private UsersData usersData;
     private String token;
 }

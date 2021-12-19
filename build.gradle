@@ -29,15 +29,11 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.2.6.RELEASE'
     implementation group: 'org.thymeleaf', name: 'thymeleaf-spring4', version: '2.1.5.RELEASE'
     implementation group: 'org.thymeleaf', name: 'thymeleaf', version: '2.1.5.RELEASE'
     implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.3.0'
-
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '2.2.6.RELEASE'
-
-
 }
 
 dependencyManagement {
